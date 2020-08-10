@@ -7,5 +7,5 @@ run.
 
 ## Updates
 **version 0.001.005 (to be released)**
-[] run on nodejs express server with package.json and .replit template files to get started straight away
-[] save function
+- [ ] run on nodejs express server with package.json and .replit template files to get started straight away
+- [ ] save function
