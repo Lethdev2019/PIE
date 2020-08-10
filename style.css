@@ -1,0 +1,88 @@
+html, body, pre {
+	position: absolute;
+	left: 0;
+	margin-top: 12px;
+	width: 100%;
+  max-width: 100%;
+	height: 100%;
+	margin: 0;
+}
+html{
+  overflow: auto !important;
+  background-color: #333;
+}
+html{
+  background-color: #333;
+}
+#codearea, #preview{
+  background-color: #252525 !important;
+  position: absolute;
+	left: 0;
+	top: 30px;
+	width: calc(100% - 20px);
+	min-height: 100%;
+	margin: 0;
+  padding: 10px;
+}
+
+#preview code{
+  background-color: #333 !important;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+pre{
+  word-break: keep-all;
+  padding-left: 10px;
+  padding-right: 40px;
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+code {
+  background-color: rgba(0,0,0,0) !important;
+  width: 100%;
+  max-width: 100%;
+	height: 100%;
+}
+
+[contenteditable]:focus {
+  outline: 0px solid transparent;
+}
+
+button {
+  background-color: rgba(255,255,255,0);
+  border: none;
+  border-radius: 0;
+  text-align: center;
+  justify-content: center;
+  color: #eee;
+  padding: 0;
+  height: 29px;
+  width: 40px;
+  outline: 0px solid transparent;
+  transition: all 0.1s;
+}
+
+button:hover {
+  background-color: rgba(255,255,255,0.03);
+  border: none;
+  text-align: center;
+  justify-content: center;
+  color: #eee;
+}
+
+button:active {
+  background-color: rgba(255,255,255,0.1);
+  border: none;
+  text-align: center;
+  justify-content: center;
+  color: #eee;
+}
+
+.tab-active{
+  border-bottom: 3px solid #8141ff !important;
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>PIE - Prism Intergrated Editor</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism-tomorrow.min.css" integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg==" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <body>
+  <div style="position: fixed; top: 0; left: 0; right: 0; max-height: 30px; z-index: 100; background-color: #333 !important; height: 100% !important;">
+    <button onclick="preview()" id="play" class="tab-active"><i data-feather="play"></i></button>
+    <button onclick="editor()" id="code"><i data-feather="code"></i></button>
+    </div>
+<div id="codearea">
+<code class="language-markdown editor" id="container" contenteditable="plaintext-only">[//]: # (This line will not appear upon your page - do not delete it due to an  issue in that deleting everything will cause it not to be editable - looking for help.)
+# Welcome
+This is PIE - the Prism Integrated Editor.
+
+## Modules
+ - Marked.JS to render markdown
+ - Prism.js to highlight syntax
+ - feather icons for well... icons.
+
+## Details
+PIE, obviously, uses a dark theme whilst the editor uses the "Tomorrow" theme.
+In PIE you can use **all** markdown syntaxes. It is pretty neat too.
+
+It does not use _ace_ or _monaco_ to edit the code... Just an editable div. OwO
+
+And you get this template too
+~~that really just tells you what this is~~ !
+
+It is also friendly to low speed browsers. This is because it does not update the html until you want to preview it, not as you type.
+
+If you find any bugs. **please tell me :)**
+
+btw, click the `<>` button to start editing.
+
+</code>
+</div>
+<div id="preview" style="font-family: Arial, Helvetica, sans-serif; color: #ccc;">
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/prism.min.js" integrity="sha512-WkVkkoB31AoI9DAk6SEEEyacH9etQXKUov4JRRuM1Y681VsTq7jYgrRw06cbP6Io7kPsKx+tLFpH/HXZSZ2YEQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-ROhjG07IRaPZsryG77+MVyx3ZT5q3sGEGENoGItwc9xgvx+dl+s3D8Ob1zPdbl/iKklMKp7uFemLJFDRw0bvig==" crossorigin="anonymous"></script>
+    <script>
+      window.scrollTo(0, 0);
+      function saveCaretPosition(context){
+          var selection = window.getSelection();
+          var range = selection.getRangeAt(0);
+          range.setStart(  context, 0 );
+          var len = range.toString().length;
+
+          return function restore(){
+              var pos = getTextNodeAtPosition(context, len);
+              selection.removeAllRanges();
+              var range = new Range();
+              range.setStart(pos.node ,pos.position);
+              selection.addRange(range);
+
+          }
+      }
+
+      function getTextNodeAtPosition(root, index){
+          const NODE_TYPE = NodeFilter.SHOW_TEXT;
+          var treeWalker = document.createTreeWalker(root, NODE_TYPE, function next(elem) {
+              if(index > elem.textContent.length){
+                  index -= elem.textContent.length;
+                  return NodeFilter.FILTER_REJECT
+              }
+              return NodeFilter.FILTER_ACCEPT;
+          });
+          var c = treeWalker.nextNode();
+          return {
+              node: c? c: root,
+              position: index
+          };
+      }
+      var code = document.getElementsByTagName('code')[0];
+      
+      code.addEventListener('input',function () {
+            var restore = saveCaretPosition(this);
+            Prism.highlightElement(this);
+            restore();
+        })
+      
+      function editor(){
+        document.getElementById("code").classList.add('tab-active');
+        document.getElementById("play").classList.remove('tab-active');
+        document.getElementById("codearea").style.display = "inline-block"
+        document.getElementById("preview").style.display = "none"
+      }
+
+      function preview(){
+        document.getElementById("play").classList.add('tab-active');
+        document.getElementById("code").classList.remove('tab-active');
+        document.getElementById("codearea").style.display = "none"
+        document.getElementById("preview").style.display = "inline-block"
+        var markdn = document.getElementById('codearea').innerText
+        console.info("[Markup.JS] Setting up preview")
+        document.getElementById('preview').innerHTML = marked(markdn)
+        console.info("[Markup.JS] Preview rendered")
+      }
+      document.getElementById("codearea").style.display = "none"
+      preview()
+</script>
+<script>
+  feather.replace()
+</script>
+  </body>
+</html>
